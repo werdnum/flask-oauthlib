@@ -485,9 +485,9 @@ class OAuthRemoteApp(object):
 
         if self.request_token_url:
             token = self.generate_request_token(callback)[0]
-            url = '%s?oauth_token=%s' % (
-                self.expand_url(self.authorize_url), url_quote(token)
-            )
+            qs = url_encode({'oauth_token': token})
+            url = self.expand_url(self.authorize_url)
+            url += ('?' in url and '&' or '?') + qs
             if params:
                 url += '&' + url_encode(params)
         else:
